@@ -4,16 +4,12 @@ import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import { PeoplePage } from './components/PeoplePage/PeoplePage';
 import classNames from 'classnames';
-import { useState } from 'react';
-import { Person } from './types';
 
 const getActiveNavBarLink = ({ isActive }: { isActive: boolean }) => {
   return classNames('navbar-item', { 'has-background-grey-lighter': isActive });
 };
 
 export const App = () => {
-  const [people, setPeople] = useState<Person[] | null>(null);
-
   return (
     <div data-cy="app">
       <nav
@@ -41,14 +37,8 @@ export const App = () => {
               <Route index element={<HomePage />} />
               <Route path="home" element={<Navigate to="/" replace />} />
               <Route path="people">
-                <Route
-                  index
-                  element={<PeoplePage people={people} setPeople={setPeople} />}
-                />
-                <Route
-                  path=":slug"
-                  element={<PeoplePage people={people} setPeople={setPeople} />}
-                />
+                <Route index element={<PeoplePage />} />
+                <Route path=":slug" element={<PeoplePage />} />
               </Route>
               <Route path="*" element={<NotFoundPage />} />
             </Route>
