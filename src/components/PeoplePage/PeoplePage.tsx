@@ -2,7 +2,6 @@ import { getPeople } from '../../api';
 import { useEffect, useState } from 'react';
 import { Person } from '../../types';
 import { Loader } from '../Loader';
-import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import { useParams } from 'react-router-dom';
 import { PersonLink } from '../PersonLink/PersonLink';
