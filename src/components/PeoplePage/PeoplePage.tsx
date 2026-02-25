@@ -5,13 +5,14 @@ import { Loader } from '../Loader';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import { useParams } from 'react-router-dom';
+import { PersonLink } from '../PersonLink/PersonLink';
 
-type PeopleTableProps = {
+type PeoplePageProps = {
   people: Person[] | null;
   setPeople: (peopleList: Person[]) => void;
 };
 
-export const PeopleTable = ({ people, setPeople }: PeopleTableProps) => {
+export const PeoplePage = ({ people, setPeople }: PeoplePageProps) => {
   const [isLoadingPeople, setIsLoadingPeople] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const { slug } = useParams();
@@ -30,10 +31,8 @@ export const PeopleTable = ({ people, setPeople }: PeopleTableProps) => {
     return people?.find(person => person.name === parentName);
   };
 
-  const findParentSlug = (parentName: string) => {
-    const parentFound = people?.find(person => person.name === parentName);
-
-    return parentFound?.slug;
+  const findParent = (parentName: string) => {
+    return people?.find(person => person.name === parentName) ?? null;
   };
 
   return (
@@ -81,14 +80,7 @@ export const PeopleTable = ({ people, setPeople }: PeopleTableProps) => {
                       })}
                     >
                       <td>
-                        <NavLink
-                          to={`/people/${person.slug}`}
-                          className={classNames({
-                            'has-text-danger': person.sex === 'f',
-                          })}
-                        >
-                          {person.name}
-                        </NavLink>
+                        <PersonLink person={person} />
                       </td>
 
                       <td>{person.sex}</td>
@@ -98,12 +90,7 @@ export const PeopleTable = ({ people, setPeople }: PeopleTableProps) => {
                         <td>-</td>
                       ) : hasParentOnTheList(person.motherName) ? (
                         <td>
-                          <NavLink
-                            to={`/people/${findParentSlug(person.motherName)}`}
-                            className="has-text-danger"
-                          >
-                            {person.motherName}
-                          </NavLink>
+                          <PersonLink person={findParent(person.motherName)} />
                         </td>
                       ) : (
                         <td>{person.motherName}</td>
@@ -113,11 +100,7 @@ export const PeopleTable = ({ people, setPeople }: PeopleTableProps) => {
                         <td>-</td>
                       ) : hasParentOnTheList(person.fatherName) ? (
                         <td>
-                          <NavLink
-                            to={`/people/${findParentSlug(person.fatherName)}`}
-                          >
-                            {person.fatherName}
-                          </NavLink>
+                          <PersonLink person={findParent(person.fatherName)} />
                         </td>
                       ) : (
                         <td>{person.fatherName}</td>

@@ -2,7 +2,7 @@ import './App.scss';
 import { HomePage } from './components/HomePage/HomePage';
 import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
-import { PeopleTable } from './components/PeopleTable/PeopleTable';
+import { PeoplePage } from './components/PeoplePage/PeoplePage';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { Person } from './types';
@@ -43,15 +43,11 @@ export const App = () => {
               <Route path="people">
                 <Route
                   index
-                  element={
-                    <PeopleTable people={people} setPeople={setPeople} />
-                  }
+                  element={<PeoplePage people={people} setPeople={setPeople} />}
                 />
                 <Route
                   path=":slug"
-                  element={
-                    <PeopleTable people={people} setPeople={setPeople} />
-                  }
+                  element={<PeoplePage people={people} setPeople={setPeople} />}
                 />
               </Route>
               <Route path="*" element={<NotFoundPage />} />
